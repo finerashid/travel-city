@@ -5,8 +5,6 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const notFound = require('./src/middlewares/notFound');
-const Mosque = require('./src/models/Mosque');
-const route = express.Router()
 const mosqueRoutes = require("./src/routes/mosque")
 
 const app = express();
@@ -34,7 +32,6 @@ app.get('/api/health', (req, res) => {
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
 app.use("/api/mosque",mosqueRoutes)
 
-module.exports = route
 app.use(notFound);
 
 const PORT = process.env.PORT || 5000;
