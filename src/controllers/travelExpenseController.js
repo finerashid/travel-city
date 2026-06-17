@@ -20,7 +20,7 @@ const createTravelExpense = async (req, res) => {                       /// To c
     }
 }   
 
-const getTravelExpenses = async (req, res) => {
+const getTravelExpenses = async (req, res) => {             
     try {
         const travelExpenses = await TravelExpense.find();
 
@@ -65,4 +65,32 @@ const getTravelExpenseById = async (req, res) => {
 }
 }
 
-module.exports = {createTravelExpense, getTravelExpenses, getTravelExpenseById,};
+
+const updateTravelExpense = async (req, res) => {
+    try {
+        const travelExpense = await TravelExpense.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true,});
+
+        if(!travelExpense) {
+           return res.status(404).json({
+            success: false,
+            message: "Travel expense not found",
+            data: null,                                         /// agar travel expense ki id match nahi hui to fail honga
+        });   
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Travel expense updated succesfully",
+            data: travelExpense,                                      /// agar suuces hua toh
+        });                    
+    }  catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+            data: null,                                         /// agar fail hua toh
+        });  
+    }
+};
+
+
+module.exports = {createTravelExpense, getTravelExpenses, getTravelExpenseById, updateTravelExpense,};
