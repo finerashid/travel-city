@@ -106,9 +106,46 @@ const getCultureNoteById = async (req, res) => {
     }
 };
 
+const updateCultureNote = async (req, res) => {
+    try {
+        const noteId = req.params.id;
+        const data = req.body;
+
+        const noteDbRes = await Note.findByIdAndUpdate(noteId,data,
+            {
+                new: true,          
+                runValidators: true 
+            }
+        );
+
+        if (!noteDbRes) {
+            return res.status(404).send({
+                success: false,
+                message: "Culture Note not found",
+                data: null
+            });
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Culture Note updated successfully!",
+            data: noteDbRes
+        });
+
+    } catch (error) {
+        console.log("Error updating Culture Note:", error);
+
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        });
+    }
+};
 
 module.exports = {
     createCultureNote,
     getCultureNote,
     getCultureNoteById,
+    updateCultureNote,
 }

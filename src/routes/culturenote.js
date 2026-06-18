@@ -3,8 +3,8 @@ const route = express.Router()
 const cultureNote = require("../controllers/CultureNote")
 
 route.post("/", cultureNote.createCultureNote)
-route.get("/:id", cultureNote.getCultureNote)
+route.get("/", cultureNote.getCultureNote)
 route.get("/:id", cultureNote.getCultureNoteById)
-
+route.put("/:id", cultureNote.updateCultureNote)
 
 module.exports = route
