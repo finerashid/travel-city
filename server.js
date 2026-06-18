@@ -5,7 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const notFound = require('./src/middlewares/notFound');
-
+const favoriteRoutes = require('./src/routes/favorite')
 const app = express();
 
 
@@ -29,7 +29,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
-
+app.use("/api/favorite", favoriteRoutes)
 
 
 app.use(notFound);
