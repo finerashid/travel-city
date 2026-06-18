@@ -42,4 +42,28 @@ const addUser = async (req, res) => {
     }
 };
 
-module.exports = { addUser };
+const getUsers = async (req, res) => {
+    try {
+        let userData = req.body;
+        let query = {};
+        if (userData.name) {
+            query.name = userData.name;
+        }
+        if (userData.email) {
+            query.email = userData.email;
+        }
+        if (userData.role) {
+            query.role = userData.role;
+        }
+        const users = await user.find(query);
+        sendRes.success = true;
+        sendRes.message = 'Users retrieved successfully';
+        sendRes.data = users;
+        return res.status(200).json(sendRes);
+    } catch (error) {
+        console.log("error while retrieving users: ", error);
+        return res.status(500).json(sendRes);
+    }
+};
+
+module.exports = { addUser, getUsers };
