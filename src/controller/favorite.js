@@ -36,10 +36,29 @@ const addFavorite= async (req, res) => {
             return res.status(200).send(sendRes)
         }
     } catch (error) {
-        console.log("Error in adding Mosque", error)
+        console.log("Error in adding Favorite", error)
         return res.status(500).send(sendRes)
     }
 }
+const getFavorites = async (req, res) => {
+    try {
+        const favorite = await Favorite.find()
+            .populate("user");
 
+        return res.status(200).send({
+            success: true,
+            message: "Favorites fetched successfully",
+            data: favorite
+        });
+    } catch (error) {
+        console.log("Error fetching favorites:", error);
 
-module.exports = {addFavorite}
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        });
+    }
+};
+
+module.exports = {addFavorite,getFavorites}
