@@ -99,4 +99,38 @@ const getFavoritesById = async (req, res) => {
         });
     }
 };
-module.exports = {addFavorite,getFavorites,getFavoritesById}
+const updateFavoriteFavoritesById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const updateResult = await Favorite.updateOne(
+            { _id: id },
+            { $set: req.body }
+        );
+
+        if (updateResult.matchedCount === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "Favorites not found",
+                data: null
+            });
+        }
+
+        const updatedFavorite = await Favorite.findById(id);
+
+        return res.status(200).send({
+            success: true,
+            message: "Mosque updated successfully",
+            data: updatedFavorite
+        });
+    } catch (error) {
+        console.log("Error updating Favorites:", error);
+
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        });
+    }
+};
+module.exports = {addFavorite,getFavorites,getFavoritesById,updateFavoriteFavoritesById}
