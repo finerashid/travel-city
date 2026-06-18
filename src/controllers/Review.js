@@ -56,8 +56,30 @@ const getReviews = async (req, res) => {
             return res.status(500).json(sendRes);
         }
     };
+const updateReview = async (req, res) => {
+    try {
+        let reviewId = req.params.id;
+        let updatedReview = req.body;
+
+        const foundReview = await review.findById(reviewId);
+        if (!foundReview) {
+            sendRes.message = 'Review not found';
+            return res.status(404).json(sendRes);
+        }
+
+        const updated = await review.findByIdAndUpdate(reviewId, updatedReview, { new: true, runValidators: true });
+        sendRes.success = true;
+        sendRes.message = 'Review updated successfully';
+        sendRes.data = updated;
+        return res.status(200).json(sendRes);
+    } catch (error) {
+        console.log("error while updating review: ", error);
+        return res.status(500).json(sendRes);
+    }
+};
 
 module.exports = {
     addReview,
-    getReviews
+    getReviews,
+    updateReview
 };
