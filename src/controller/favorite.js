@@ -133,4 +133,33 @@ const updateFavoritesById = async (req, res) => {
         });
     }
 };
-module.exports = {addFavorite,getFavorites,getFavoritesById,updateFavoritesById}
+const deleteFavoriteById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deleteResult = await Favorite.deleteOne({ _id: id });
+
+        if (deleteResult.deletedCount === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "Favorite not found",
+                data: null
+            });
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Favorite deleted successfully",
+            data: null
+        });
+    } catch (error) {
+        console.log("Error deleting Favorite:", error);
+
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        });
+    }
+};
+module.exports = {addFavorite,getFavorites,getFavoritesById,updateFavoritesById,deleteFavoriteById}
