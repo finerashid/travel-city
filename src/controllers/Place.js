@@ -1,4 +1,6 @@
 const Place = require("../models/Place")
+const City = require("../models/City")
+const Country = require("../models/Country")
 
 let sendRes ={
     success:false,
@@ -62,5 +64,76 @@ const addPlace = async (req,res)=>
     }
 }
 
+const getPlace = async (req, res) => {
+  try {
+    let body = req.body;
+
+    //dynamic filter object
+    let filter = {};
+
+    if (body.city) {
+      filter.city = body.city;
+    }
+
+    if (body.name) {
+      filter.name = { $regex: body.name, $options: "i" };
+    }
+
+    if (body.country) {
+      filter.country = body.country;
+    }
+
+    if (body.category) {
+      filter.category = body.category;
+    }
+
+    if (body.description) {
+      filter.description = body.description;
+    }
+
+    if (body.address) {
+      filter.address = body.address;
+    }
+
+    if (body.location) {
+      filter.location = body.location;
+    }
+
+    if (body.entryFee) {
+      filter.entryFee = body.entryFee;
+    }
+
+    if (body.openingHours) {
+      filter.openingHours = body.openingHours;
+    }
+
+    if(body.images){
+        filter.images = body.images
+    }
+
+    if(body.tags){
+        filter.tags = body.tags
+     }
+
+    let placeDbRes = await Place.find(filter).populate("city").populate("country");
+
+    if (placeDbRes.length > 0) {
+      sendRes.success = true;
+      sendRes.message = "Places fetched successfully!";
+      sendRes.data = placeDbRes;
+      return res.status(200).send(sendRes);
+    } else {
+      return res.status(404).send({
+        success: false,
+        message: "No places found"
+      });
+    }
+
+  } catch (error) {
+    console.log("Error in getting places", error);
+    return res.status(500).send(sendRes);
+  }
+};
+
 module.exports = 
-{addPlace}
+{addPlace, getPlace}
