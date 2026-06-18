@@ -1,4 +1,4 @@
-const user = require('../models/Review');
+const review = require('../models/Review');
 
 let sendRes = {
     success: false,
@@ -24,7 +24,7 @@ const addReview = async (req, res) => {
         if(newReview.images) {
             createdReview.images = newReview.images;
         }
-        const savedReview = await user.create(createdReview);
+        const savedReview = await review.create(createdReview);
         if (savedReview) {
         sendRes.success = true;
         sendRes.message = 'Review added successfully';
@@ -36,7 +36,20 @@ const addReview = async (req, res) => {
         return res.status(500).json(sendRes);
     }
 };
+const getReviews = async (req, res) => {
+    try {
+        const reviews = await review.find();
+        sendRes.success = true;
+        sendRes.message = 'Reviews retrieved successfully';
+        sendRes.data = reviews;
+        return res.status(200).json(sendRes);
+        } catch (error) {
+            console.log("error while retrieving reviews: ", error);
+            return res.status(500).json(sendRes);
+        }
+    };
 
 module.exports = {
     addReview,
+    getReviews
 };
