@@ -5,7 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const notFound = require('./src/middlewares/notFound');
-
+const restaurantRoutes = require('./src/routes/restaurant');
 const app = express();
 
 
@@ -29,7 +29,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
-
+app.use("/api/restaurants", restaurantRoutes);
 
 
 app.use(notFound);
