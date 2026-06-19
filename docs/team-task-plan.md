@@ -71,6 +71,7 @@ For each model, the CRUD should satisfy these requirements:
 1. `POST` creates a new record.
 2. `GET /` returns all records.
 3. `GET /:id` returns one record by ID.
+4. `PUT /:id` updates one record by ID.
 4. `PUT | PATCH /:id` updates one record by ID. (Optional, you can use body if you want)(params or body, query not allowed)
 5. `DELETE /:id` deletes one record by ID.
 6. Invalid ObjectId should return a clear error.
@@ -117,6 +118,7 @@ git checkout -b feature/country-rashid
 Example:
 
 ```txt
+src/controllers/countryController.js
 src/controllers/country.js
 ```
 
@@ -126,11 +128,13 @@ Use Postman, Thunder Client, or Hoppscotch.
 
 ### 5. Commit
 
+There should be a commit for each API created
 There should be a commit for each API created.
 
 EXAMPLE:
 ```bash
 git add .
+git commit -m "Implement Country POST API"
 git commit -m "Implemented Country POST API"
 ```
 
@@ -153,6 +157,7 @@ After basic CRUD is complete, add:
 3. Sorting.
 4. Filtering by city or country.
 5. Populate related fields.
+6. JWT authentication.
 6. JWT authentication. (Not now)
 7. Role-based access control.
 8. Swagger API documentation.
