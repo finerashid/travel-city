@@ -13,8 +13,9 @@ const notFound = require('./src/middlewares/notFound');
 const restaurantRoutes = require("./src/routes/restaurant");
 const cityRoutes = require("./src/routes/city");
 
-const app = express();
 
+
+const app = express();
 
 app.use(cors());
 app.use(express.json());
@@ -37,7 +38,11 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+const localGuideRoutes = require('./src/routes/LocalGuide');
+const visaInfoRoutes = require("./src/routes/VisaInfo")
 
+app.use("/api/local-guides",localGuideRoutes);
+app.use("/api/visa-info",visaInfoRoutes)
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/cities", cityRoutes);
