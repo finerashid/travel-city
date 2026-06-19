@@ -9,6 +9,8 @@ const hotelRoutes = require("./src/routes/hotel")
 const cors = require('cors');
 const morgan = require('morgan');
 const notFound = require('./src/middlewares/notFound');
+const restaurantRoutes = require("./src/routes/restaurant");
+const cityRoutes = require("./src/routes/city");
 
 const app = express();
 
@@ -35,7 +37,8 @@ app.get('/api/health', (req, res) => {
 });
 
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
-
+app.use("/api/restaurants", restaurantRoutes);
+app.use("/api/cities", cityRoutes);
 
 
 const placeRoutes = require("./src/routes/Place")
