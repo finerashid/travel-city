@@ -3,6 +3,7 @@ require('./src/models/db');
 require('./src/models/Country');
 require('./src/models/City');
 require('./src/models/Mosque');
+const noteRouter = require("./src/routes/culturenote")
 const countryRoutes = require('./src/routes/country');
 
 const travelExpenseRoutes = require("./src/routes/travelExpenseRoutes")
@@ -17,8 +18,9 @@ const mosqueRoutes = require("./src/routes/mosque")
 const restaurantRoutes = require("./src/routes/restaurant");
 const cityRoutes = require("./src/routes/city");
 
-const app = express();
 
+
+const app = express();
 
 app.use(cors());
 app.use(express.json());
@@ -41,17 +43,30 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+const localGuideRoutes = require('./src/routes/LocalGuide');
+const visaInfoRoutes = require("./src/routes/VisaInfo")
 
+app.use("/api/local-guides",localGuideRoutes);
+app.use("/api/visa-info",visaInfoRoutes)
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
 app.use("/api/mosque",mosqueRoutes)
 
 app.use(notFound);
+app.use('/api/culture-notes', noteRouter);
+
+app.use("/api/travel-expenses", travelExpenseRoutes)
+
+app.use("/api/auth", authRoutes)
+
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/cities", cityRoutes);
 
 
 const placeRoutes = require("./src/routes/Place")
 app.use("/api/places", placeRoutes);
+
+const itineraryRoutes = require("./src/routes/TravelItinerary")
+app.use("/api/travel-itineraries", itineraryRoutes);
 
 const PORT = process.env.PORT || 5000;
 
