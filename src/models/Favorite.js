@@ -1,5 +1,4 @@
 const mongoose = require('./db');
-
 const favoriteSchema = new mongoose.Schema(
   {
     user: {
