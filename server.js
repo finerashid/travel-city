@@ -1,9 +1,17 @@
 require('dotenv').config();
 require('./src/models/db');
+<<<<<<< HEAD
 const userRoutes = require('./src/routes/User');
 require('./src/models/Country');
 require('./src/models/City');
 require('./src/models/Mosque');
+=======
+<<<<<<< HEAD
+=======
+const userRoutes = require('./src/routes/User');
+const reviewRoutes = require('./src/routes/Review');
+>>>>>>> 8f4fa7f (Implemented Review POST API)
+>>>>>>> e67de027ff38a12bb00a810f94dd090e779143cd
 
 const express = require('express');
 const hotelRoutes = require("./src/routes/hotel")
@@ -48,11 +56,19 @@ app.use("/api/local-guides",localGuideRoutes);
 app.use("/api/visa-info",visaInfoRoutes)
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
 
+<<<<<<< HEAD
 app.use('/api/users', userRoutes);
 app.use('/api/transport-option', transportOption)
 app.use("/api/favorite", favoriteRoutes)
 app.use("/api/mosque", mosqueRoute)
+=======
+<<<<<<< HEAD
+>>>>>>> e67de027ff38a12bb00a810f94dd090e779143cd
 
+=======
+app.use('/api/users', userRoutes);
+app.use('/api/reviews', reviewRoutes);
+>>>>>>> 8f4fa7f (Implemented Review POST API)
 
 app.use(notFound);
 app.use('/api/culture-notes', noteRouter);
