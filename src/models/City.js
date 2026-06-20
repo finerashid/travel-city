@@ -33,7 +33,7 @@ const citySchema = new mongoose.Schema(
       default: '',
     },
   },
-  { timestamps: true }
+  { timestamps: true}
 );
 
 module.exports = mongoose.model('City', citySchema);

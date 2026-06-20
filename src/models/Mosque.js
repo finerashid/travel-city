@@ -1,5 +1,4 @@
-const mongoose = require('./db');
-
+const mongoose = require('./db'); 
 const mosqueSchema = new mongoose.Schema(
   {
     name: {
