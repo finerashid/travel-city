@@ -6,7 +6,10 @@ const morgan = require('morgan');
 
 const notFound = require('./src/middlewares/notFound');
 
+const authRoutes = require("./src/routes/authRoutes");
 const cityRoutes = require("./src/routes/city");
+const cultureNoteRoutes = require("./src/routes/cultureNote")
+const countryRoutes = require("./src/routes/country");
 const favoriteRoutes = require('./src/routes/favorite')
 const hotelRoutes = require("./src/routes/hotel")
 const itineraryRoutes = require("./src/routes/travelItinerary")
@@ -16,6 +19,7 @@ const placeRoutes = require("./src/routes/Place")
 const restaurantRoutes = require("./src/routes/restaurant");
 const reviewRoutes = require('./src/routes/Review');
 const transportOption = require('./src/routes/TransportOption')
+const travelExpenseRoutes = require('./src/routes/travelExpenseRoutes')
 const userRoutes = require('./src/routes/User');
 const visaInfoRoutes = require("./src/routes/visaInfo")
 
@@ -51,10 +55,10 @@ app.use("/api/visa-info",visaInfoRoutes)
 app.use('/api/users', userRoutes);
 app.use('/api/transport-option', transportOption)
 app.use("/api/favorite", favoriteRoutes)
-app.use("/api/mosque", mosqueRoute)
+app.use("/api/mosque", mosqueRoutes)
 app.use('/api/users', userRoutes);
 app.use('/api/reviews', reviewRoutes);
-app.use('/api/culture-notes', noteRouter);
+app.use('/api/culture-notes', cultureNoteRoutes);
 app.use("/api/travel-expenses", travelExpenseRoutes)
 app.use("/api/auth", authRoutes)
 app.use("/api/restaurants", restaurantRoutes);
