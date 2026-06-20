@@ -1,6 +1,6 @@
-const TravelExpense = require('../models/TravelExpense');
-require('../models/User');
-require('../models/TravelItinerary');
+const TravelExpense = require("../models/TravelExpense");
+require("../models/User");
+require("../models/TravelItinerary");
 
 const validateObejectId = require("../middlewares/validateObjectId");
 
@@ -52,6 +52,34 @@ const getTravelExpenses = async (req, res) => {
     }
 }
 
+const getTravelExpenses = async (req, res) => {
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const sort = req.query.sort || "-createdAt";
+
+  const skip = (page - 1) * limit;
+
+  try {
+    const travelExpenses = await TravelExpense.find({ user: req.user._id })
+      .populate("user", "name email")
+      .populate("itinerary", "title budget")
+      .sort(sort)
+      .skip(skip)
+      .limit(limit);
+
+    return res.status(200).json({
+      success: true,
+      message: "Travel expense fetched succesfully",
+      data: travelExpenses,
+    }); /// agar suuces hua toh
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null, /// agar fail hua toh
+    });
+  }
+};
 
 const getTravelExpenseById = async (req, res) => {
     try {
@@ -81,6 +109,19 @@ const getTravelExpenseById = async (req, res) => {
     }
 }
 
+    return res.status(200).json({
+      success: true,
+      message: "Travel expense fetched succesfully",
+      data: expense, /// agar suuces hua toh
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null, /// agar fail hua toh
+    });
+  }
+};
 
 const updateTravelExpense = async (req, res) => {
     try {
@@ -106,8 +147,20 @@ const updateTravelExpense = async (req, res) => {
             data: null,                                         /// agar fail hua toh
         });
     }
-};
 
+    return res.status(200).json({
+      success: true,
+      message: "Travel expense updated succesfully",
+      data: travelExpense, /// agar suuces hua toh
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null, /// agar fail hua toh
+    });
+  }
+};
 
 const deleteTravelExpenses = async (req, res) => {
     try {
@@ -133,7 +186,19 @@ const deleteTravelExpenses = async (req, res) => {
             data: null,                                         /// agar fail hua toh
         });
     }
-}
 
+    return res.status(200).json({
+      success: true,
+      message: "Travel expense deleted succesfully",
+      data: travelExpense, /// agar suuces hua toh
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null, /// agar fail hua toh
+    });
+  }
+};
 
 module.exports = { createTravelExpense, getTravelExpenses, getTravelExpenseById, updateTravelExpense, deleteTravelExpenses, };
