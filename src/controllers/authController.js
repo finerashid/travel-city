@@ -2,9 +2,9 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
-    try{
-        const { name, email, password, role} = req.body;
-        const existUser = await User.findOne({email});
+    try {
+        const { name, email, password, role } = req.body;
+        const existUser = await User.findOne({ email });
 
         if (existUser) {
             return res.status(400).json({
@@ -24,9 +24,9 @@ const signup = async (req, res) => {
         return res.status(201).json({
             success: true,
             message: "User registered successfully",
-            data: user,
+            data: null,
         });
-    } catch(error) {
+    } catch (error) {
         return res.status(500).json({
             success: false,
             message: error.message,
@@ -38,11 +38,11 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { email, password} = req.body;
+        const { email, password } = req.body;
 
-        const user = await User.findOne({email}).select("+password");
+        const user = await User.findOne({ email }).select("+password");
 
-        if(!user) {
+        if (!user) {
             return res.status(401).json({
                 success: false,
                 message: "Invalid credentials",
@@ -50,7 +50,7 @@ const login = async (req, res) => {
             });
         }
 
-        if(user.password !== password) {
+        if (user.password !== password) {
             return res.status(401).json({
                 success: false,
                 message: "Invalid password",
@@ -58,29 +58,33 @@ const login = async (req, res) => {
             });
         }
 
-        const token = jwt.sign({id: user._id, email: user.email, role: user.role,}, process.env.JWT_SECRET, {expiresIn: "7d",});
+        let userData = { id: user._id, email: user.email, role: user.role }
+
+        const token = jwt.sign(userData, process.env.JWT_SECRET, { expiresIn: "7d", });
 
         return res.status(200).json({
-                success: true,
-                message: "Login succesful",
-                token,
-            }); 
+            success: true,
+            message: "Login succesful",
+            data: userData,
+            token,
+        });
+        
     } catch (error) {
         return res.status(500).json({
-                success: false,
-                message: error.message,
-                data: null,
-            });
+            success: false,
+            message: error.message,
+            data: null,
+        });
     }
 };
 
 const changePassword = async (req, res) => {
     try {
-        const {oldPassword, newPassword} = req.body;
+        const { oldPassword, newPassword } = req.body;
 
         const user = await User.findById(req.user._id).select("+password")
 
-        if(user.password !== oldPassword){
+        if (user.password !== oldPassword) {
             return res.status(400).json({
                 success: false,
                 message: "Old password is incorrect",
@@ -92,20 +96,20 @@ const changePassword = async (req, res) => {
 
         await user.save();
 
-         return res.status(200).json({
-                success: true,
-                message: "Password changed succesful",
-                data: null,
-            }); 
+        return res.status(200).json({
+            success: true,
+            message: "Password changed succesful",
+            data: null,
+        });
 
     } catch (error) {
         return res.status(500).json({
-                success: false,
-                message: error.message,
-                data: null,
-            });
+            success: false,
+            message: error.message,
+            data: null,
+        });
     }
 }
 
 
-module.exports = {signup, login, changePassword,}
+module.exports = { signup, login, changePassword, }

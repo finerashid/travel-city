@@ -22,6 +22,7 @@ travel-city-explorer-api-boilerplate/
 ├── .env.example
 ├── src/
 │   ├── config/
+│   │   └── db.js
 │   ├── controllers/
 │   │   └── ...15 controllers files
 │   ├── middlewares/
@@ -159,3 +160,11 @@ Each developer should:
 
 ## Example CRUD Logic
 
+See:
+
+```txt
+src/controllers/_crudControllerTemplate.js
+src/controllers/_sampleCompletedCountryController.js
+```
+
+The controller files currently return `501 Not Implemented`. That is intentional so each student can complete their own model CRUD.

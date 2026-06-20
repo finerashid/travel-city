@@ -1,5 +1,4 @@
 const mongoose = require('./db');
-
 const favoriteSchema = new mongoose.Schema(
   {
     user: {
@@ -11,6 +10,11 @@ const favoriteSchema = new mongoose.Schema(
       type: String,
       enum: ['Country', 'City', 'Place', 'Mosque', 'Restaurant', 'Hotel', 'TravelItinerary'],
       required: [true, 'Item type is required'],
+    },
+    itemId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Item ID is required'],
+      refPath: 'itemType',
     },
     notes: {
       type: String,
