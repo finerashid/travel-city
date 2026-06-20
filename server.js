@@ -1,9 +1,14 @@
 require('dotenv').config();
 require('./src/models/db');
+require('dotenv').config();
+require('./src/models/db');
+
 require('./src/models/Country');
 require('./src/models/City');
 require('./src/models/Mosque');
 
+const userRoutes = require('./src/routes/User');
+const reviewRoutes = require('./src/routes/Review');
 const userRoutes = require('./src/routes/User');
 const reviewRoutes = require('./src/routes/Review');
 
